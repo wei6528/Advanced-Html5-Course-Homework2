@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <style type="text/css">
+  .box{ border:1px #dedede solid; width:100%; height:auto; padding:10px; margin-bottom:10px;}
+  h4{ width:100%; background-color:#eeeeee;}
+  .form-control{ width: 200px;}
+  </style>
+</head>
+<body>
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+
+  <p>I am {{4+6}}</p>
+	<div ng-app="store"> <!-- ng-app : angular固定寫法-->
+  		<p>I am {{4+6}}</p>
+      
+  		  <div ng-Controller="storeController as store"> <!-- ng-Controller : angular固定寫法-->
+
+        <h4>基本帶資料</h4>
+        <div class="box" ng-hide="store.products[1].soldOut"> <!--是否要隱藏 : true為要隱藏,false不要隱藏-->
+      		<p>product Name : {{store.products[1].name}}</p>
+      		<p>product Price : ${{store.products[1].price}}</p>
+      		<p>product Description : {{store.products[1].description}}</p>
+          <button ng-show="store.products[1].canBuy">Add to cart</button> <!-- ng-show : true要顯示,false不要顯示-->
+        </div>
+
+
+        <h4>Two Way Binding - 雙向自動綁定 簡易範例</h4>
+        <div class="box">
+          <input ng-model="result" />
+          {{result}}
+        </div>
+
+        <h4>雙重迴圈</h4>
+        <div class="box" ng-repeat="product in store.products" >
+          <p>product Name : {{product.name}}</p>
+          <p>product Price : {{product.price}}</p>
+          <p>product Description : {{product.description}}</p>
+
+          <div ng-repeat="image in product.image" >
+            <p>product Images : <img ng-src="{{image.url}}"/></p>
+            <p>product description : {{image.description}}</p>
+          </div>
+          <button ng-show="product.canBuy">Add to cart</button>
+
+          <h4>tab</h4>
+          <section ng-Controller="panelController as panel">
+          <ul class="nav nav-pills">
+            <li ng-class="{ active: panel.isSelected(1)}">
+              <a href="#" ng-click="panel.selectTab(1)">Description</a>
+            </li>
+            <li ng-class="{ active: panel.isSelected(2)}">
+              <a href="#" ng-click="panel.selectTab(2)">Specification</a>
+            </li>
+            <li ng-class="{ active: panel.isSelected(3)}">
+              <a href="#" ng-click="panel.selectTab(3)">Reviews</a>
+            </li>
+          </ul>
+          
+          <div class="panel" ng-show="panel.isSelected(1)">
+            <h4>Description</h4>
+            <p>{{product.description}}</p>
+          </div>
+          
+          <div class="panel" ng-show="panel.isSelected(2)">
+            <h4>Specification</h4>
+            <p>none yet</p>
+          </div>
+          
+          <div class="panel" ng-show="panel.isSelected(3)">
+            <h4>View</h4>
+            
+            <form name="reviewForm" ng-controller="reviewController in reviewCtrl" ng-submit = "reviewForm.$valid && reviewCtrl.addReview(Product)">
+            <!--樣板View-->
+              <!--<blockquote ng-controller="ReviewController in reviewCtrl" ng-submit = "reviewForm.$valid && reviewCtrl.addReview(Product)">-->
+              <blockquote>
+              <b>Stars:{{reviewCtrl.review.stars}}</b><br/>
+                {{reviewCtrl.review.body}}
+              <br/><cite>by:{{reviewCtrl.review.author}}</cite>
+            </blockquote>
+            <!--輸入框-->
+            <h3>Submit a Review<h3>
+              <select ng-model="reviewCtrl.review.stars" class="form-control"> <!--ng-model : angular特有的MVC Model-->
+                <option value="1">1 star</option>
+                <option value="2">2 star</option>
+                <option value="3">3 star</option>
+                <option value="4">4 star</option>
+                <option value="5" selected="true">5 star</option>
+              </select><br/>
+              <textarea ng-model="reviewCtrl.review.body" rows="3" class="form-control" width="150px"></textarea><br/>
+              <label>by:</label><input type="email" ng-model="reviewCtrl.review.author" class="form-control" width="150px"/><br/>
+              <input type="submit" value="Submit" class="btn"/>
+            </form>
+          </div>
+        </section>
+        {{tab}}
+        </div>
+    	</div>
+
+ 	</div>
+  
+  <br/>
+
+
+
+</body>
+</html>

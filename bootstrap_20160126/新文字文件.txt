@@ -1,0 +1,5 @@
+http://startbootstrap.com/template-categories/one-page/
+
+http://blackrockdigital.github.io/startbootstrap-grayscale/  --01
+
+http://theme-fusion.com/avada/advanced-admin-panel/sticky-header/
